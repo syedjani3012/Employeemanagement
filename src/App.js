@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import Login from './components/Auth/Login'
+import Employee from './components/Dashboard/Employee'
+import Admin from './components/Dashboard/Admin'
+import { getlocalstorage, setlocalstorage } from './utils/Localstorage';
 
 function App() {
+
+  const [user,setUser]=useState(null)
+
+  const handlelogin=(email,pass)=>{
+    if(email==="jani@tcs.com" && pass==="123"){
+      setUser('admin')
+    }
+    else if(email==="user@me.com" && pass==="123"){
+      setUser('user')
+    }
+    else{
+      alert("Invalid credentials");
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   <>
+   {!user ? <Login handlelogin={handlelogin}/> : ''}
+   {user=='admin' ? <Admin/> : <Employee/>}
+   {/* <Employee/> */}
+   {/* <Admin/> */}
+   </>
+  )
 }
 
-export default App;
+export default App
